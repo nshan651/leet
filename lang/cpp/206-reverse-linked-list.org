@@ -1,0 +1,102 @@
+#+title: 206. Reverse Linked List
+#+author: nshan651
+#+startup: inlineimages
+
+Given the head of a singly linked list, reverse the list, and return the /reversed list/.
+
+* Examples
+** Example 1:
+[[~/git/leet/resources/rev1ex1.jpg]]
+
+#+begin_example
+Input: head = [1,2]
+Output: [2,1]
+#+end_example
+
+** Example 2:
+[[~/git/leet/resources/rev1ex2.jpg]]
+
+** Example 3:
+
+* Constraints:
+    - The number of nodes in the list is the range [0, 5000].
+    - -5000 <= Node.val <= 5000
+
+* Follow up:
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+* Solution
+This solution has two approaches: iterative and recursive. Let's start with the iterative solution:
+
+** Iterative
+#+begin_src C++ :includes <iostream> :flags -I./src/util :tangle "src/206-reverse-linked-list.cpp"
+  #include <iostream>
+  #include "ListNode.hpp"
+  /**
+   ,* Definition for singly-linked list.
+   ,* struct ListNode {
+   ,*     int val;
+   ,*     ListNode *next;
+   ,*     ListNode() : val(0), next(nullptr) {}
+   ,*     ListNode(int x) : val(x), next(nullptr) {}
+   ,*     ListNode(int x, ListNode *next) : val(x), next(next) {}
+   ,* };
+   ,*/
+  class Solution {
+  public:
+    /** Iterative */
+    ListNode* reverseList(ListNode* head) {
+      ListNode* prev = nullptr;
+      ListNode* next = nullptr;
+
+      while (head != nullptr)
+        {
+          next = head->next;
+          head->next = prev;
+          prev = head;
+          head = next;
+        }
+      return prev;
+    }
+  };
+
+  int main()
+  {
+    Solution s1;
+    std::array<int, 5> nums = {1, 2, 3, 4, 69};
+    ListNode* head = createListFromArray(nums);
+    printList(head);
+
+    ListNode* r1 = s1.reverseList(head);
+    printList(r1);
+
+    return 0;
+  }
+    #+end_src
+
+    #+RESULTS:
+    | 69 | 4 | 3 | 2 |  1 |
+    |  1 | 2 | 3 | 4 | 69 |
+
+** Recursive
+#+begin_src C++ :includes <iostream> :flags -I./src/util :tangle "src/206-reverse-linked-list.cpp"
+  class Solution {
+  public:
+      /** Recursive */
+      ListNode* reverseList(ListNode* head) {
+          ListNode* prev = nullptr;
+          function<ListNode*(ListNode*, ListNode*)>
+          reverseList =
+          [&reverseList](ListNode* prev, ListNode* head) -> ListNode*
+          {
+              if (!head) return prev;
+              ListNode* next = head->next;
+              head->next = prev;
+              return reverseList(head, next);
+          };
+          return reverseList(prev, head);
+      }
+  };
+#+end_src
+
+#+RESULTS:

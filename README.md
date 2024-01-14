@@ -1,3 +1,0 @@
-# leet
-
-My LeetCode Solutions
