@@ -29,7 +29,7 @@ A linked list can be reversed either iteratively or recursively. Could you imple
 This solution has two approaches: iterative and recursive. Let's start with the iterative solution:
 
 ** Iterative
-#+begin_src C++ :includes <iostream> :flags -I./src/util :tangle "src/206-reverse-linked-list.cpp"
+#+begin_src C++ :includes <iostream> :flags -I./src/util -std=c++20 :tangle "src/206-reverse-linked-list.cpp"
   #include <iostream>
   #include "ListNode.hpp"
   /**
@@ -79,7 +79,7 @@ This solution has two approaches: iterative and recursive. Let's start with the 
     |  1 | 2 | 3 | 4 | 69 |
 
 ** Recursive
-#+begin_src C++ :includes <iostream> :flags -I./src/util :tangle "src/206-reverse-linked-list.cpp"
+#+begin_src C++ :includes <iostream> :flags -I./src/util -std=c++20 :tangle "src/206-reverse-linked-list.cpp"
   class Solution {
   public:
       /** Recursive */

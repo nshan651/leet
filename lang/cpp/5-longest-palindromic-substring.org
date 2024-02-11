@@ -1,0 +1,99 @@
+#+title: 5. Longest Palindromic Substring
+#+author: nshan651
+#+startup: inlineimages
+
+Given a string s, return the longest palindromic substring in s.
+
+* Examples
+** Example 1:
+#+begin_example
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+#+end_example
+
+** Example 2:
+#+begin_example
+Input: s = "cbbd"
+Output: "bb"
+#+end_example
+
+** Constraints:
+-  1 <= s.length <= 1000
+-  s consist of only digits and English letters.
+
+* Solution
+
+#+begin_src C++ :includes <iostream> :flags -I./src/util  -std=c++20 :tangle "src/5-longest-palindromic-substring.cpp"
+  #include <vector>
+  #include <algorithm>
+
+  class Solution {
+  public:
+    std::string longestPalindrome(std::string s)
+    {
+      if (s.size() == 1) return s;
+
+      // Midpoint ceiling
+      //int mid = (s.size() + 2 - 1) / 2;
+      int left, right;
+      int maxLen = 0;
+      std::string longest = "";
+
+      for (int i = 0; i < s.size(); i++)
+      {
+        // Odd length
+        left = i, right = i;
+        while (left >= 0 && right < s.size() &&
+                s.at(left) == s.at(right))
+        {
+          if ((right - left + 1) > maxLen)
+          {
+            longest = s.substr(left, right + 1);
+            maxLen = right - left + 1;
+          }
+          left--, right++;
+        }
+        // Even length
+        left = i, right = i + 1;
+        while (left >= 0 && right < s.size() &&
+                s.at(left) == s.at(right))
+        {
+          if ((right - left + 1) > maxLen)
+          {
+            longest = s.substr(left, right + 1);
+            maxLen = right - left + 1;
+          }
+          left--, right++;
+        }
+      }
+      return longest;
+    }
+
+    int insideOut(std::string s, int left, int right)
+    {
+      while (left >= 0 && right < s.size() &&
+             s.at(left) == s.at(right))
+      {
+          left--, right++;
+      }
+      return right - left + 1;
+    }
+  };
+
+  int main()
+  {
+    Solution s1;
+
+    std::string pali = "abiba";
+    std::string longest = s1.longestPalindrome(pali);
+
+    std::cout << longest << std::endl;
+
+    return 0;
+  }
+
+  #+end_src
+
+  #+RESULTS:
+  : abiba

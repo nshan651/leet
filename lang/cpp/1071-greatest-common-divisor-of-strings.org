@@ -1,0 +1,108 @@
+#+title: 1071. Greatest Common Divisor of Strings
+#+author: nshan651
+#+startup: inlineimages
+
+https://leetcode.com/problems/greatest-common-divisor-of-strings/
+
+For two strings s and t, we say "t divides s" if and only if s = t + ... + t (i.e., t is concatenated with itself one or more times).
+
+Given two strings str1 and str2, return the largest string x such that x divides both str1 and str2.
+
+* Examples
+** Example 1:
+#+begin_example
+Input: str1 = "ABCABC", str2 = "ABC"
+Output: "ABC"
+#+end_example
+
+** Example 2:
+#+begin_example
+Input: str1 = "ABABAB", str2 = "ABAB"
+Output: "AB"
+#+end_example
+
+** Example 3:
+#+begin_example
+Input: str1 = "LEET", str2 = "CODE"
+Output: ""
+#+end_example
+
+* Constraints:
+   -  1 <= str1.length, str2.length <= 1000
+   -  str1 and str2 consist of English uppercase letters.
+
+* Solution
+
+#+begin_src C++ :includes <iostream> :flags -I./src/util -std=c++20 :tangle src/1071-greatest-common-divisor-of-strings .cpp
+  #include <string>
+
+  // Recursive
+  class Solution {
+  public:
+
+    std::string gcdOfStrings(std::string str1, std::string str2)
+    {
+      // Ensure that str1 is always greater than  str2.
+      if (str1.size() < str2.size())
+        return gcdOfStrings(str2, str1);
+
+      // Cut off common prefix and recurr.
+      if (str1.find(str2)  == 0 && str2 != "")
+        return gcdOfStrings(str1.substr(str2.size()), str2);
+
+      // GCD string is found
+      if (str2.empty())
+        return str1;
+
+      // GCD not found
+      return "";
+    }
+
+  };
+
+  // Iterative
+  class Solution2 {
+  public:
+
+    std::string gcdOfStrings(std::string str1, std::string str2)
+    {
+      std::string prefix(str1), suffix(str2);
+      while (true)
+      {
+        // Use the larger of prefix and suffix
+        if (prefix.size() < suffix.size())
+          prefix.swap(suffix);
+
+        // If the first occurence of suffix in prefix not at index zero, then there cannot be a GCD.
+        else if (prefix.find(suffix))
+          return "";
+
+        // Empty suffix means we've finished searching prefix substr, so prefix is GCD
+        else if (suffix.empty())
+          return prefix;
+
+        // Search f(g(x))
+        else
+          prefix = prefix.substr(suffix.size());
+      }
+
+      // GCD not found
+      return "";
+    }
+
+  };
+
+  int main()
+  {
+    Solution s1;
+    Solution s2;
+
+    // Input: str1 = "ABCABC", str2 = "ABC"
+    // Output: "ABC"
+    std::string word1("ABCABC");
+    std::string word2("ABC");
+
+    std::string res = s2.gcdOfStrings(word1, word2);
+    std::cout << res << std::endl;
+  }
+#+end_src

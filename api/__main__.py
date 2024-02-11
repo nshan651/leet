@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import json
 from typing import Dict
 import re
+import requests
 from requests.models import Response
 
 
