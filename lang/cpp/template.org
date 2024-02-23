@@ -1,0 +1,30 @@
+#+title: Problem Template
+#+author: nshan651
+#+options: tex:t toc:nil
+#+startup: inlineimages latexpreview
+
+https://leetcode.com/problems/your_problem/
+
+Problem description goes here
+
+* Examples
+** Example 1:
+#+begin_example
+First example
+#+end_example
+
+* Constraints:
+    $$ 1 <= num <= 10^8 $$
+
+*  Solution
+
+#+begin_src C++ :includes <iostream> :flags -I./src/util -std=c++20 :tangle src/ .cpp
+  // Code here
+
+  int main()
+  {
+    Solution s1;
+
+    return 0;
+  }
+#+end_src

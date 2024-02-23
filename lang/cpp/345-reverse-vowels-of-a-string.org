@@ -1,0 +1,75 @@
+#+title: 345. Reverse Vowels of a String
+#+author: nshan651
+#+options: tex:t toc:nil
+#+startup: inlineimages latexpreview
+
+https://leetcode.com/problems/reverse-vowels-of-a-string/
+
+Given a string s, reverse only all the vowels in the string and return it.
+
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+
+* Examples
+** Example 1:
+#+begin_example
+Input: s = "hello"
+Output: "holle"
+#+end_example
+
+** Example 2:
+#+begin_example
+Input: s = "leetcode"
+Output: "leotcede"
+#+end_example
+
+* Constraints:
+- $$ 1 <= s.length <= 3 * 10^5 $$
+- =s= consists of *printable ASCII* characters.
+
+*  Solution
+
+#+begin_src C++ :async yes :includes <iostream> :flags -I./src/util -std=c++23 :tangle src/345-reverse-vowels-of-a-string.cpp
+#include <string>
+#include <map>
+#include <vector>
+#include <algorithm>
+
+class Solution
+{
+public:
+
+  std::string reverseVowels(std::string s)
+  {
+    auto isVowel = [](char c)
+    { return c == 'a' || c == 'e' || c == 'i' || c == 'o'
+	|| c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
+    };
+
+    int left = 0, right = s.size() - 1;
+
+    while (left < right)
+    {
+      if (!isVowel(s[left]))
+	left++;
+      if (!isVowel(s[right]))
+	right--;
+      if (isVowel(s[left]) && isVowel(s[right]))
+	std::swap(s[left++], s[right--]);
+    }
+
+    return s;
+  }
+};
+
+int main()
+{
+  Solution s1;
+
+  std::string v = "hello";
+  std::string res = s1.reverseVowels(v);
+
+  std::cout << res << std::endl;
+
+  return 0;
+}
+#+end_src
