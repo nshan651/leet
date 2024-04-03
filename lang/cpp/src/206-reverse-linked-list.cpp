@@ -2,9 +2,6 @@
 
 
 
-
-
-
 #include <iostream>
 #include "ListNode.hpp"
 /**
@@ -49,10 +46,6 @@ int main()
 }
 
 #include <iostream>
-
-
-
-
 
 
 int main() {
